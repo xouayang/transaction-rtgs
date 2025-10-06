@@ -21,7 +21,7 @@ const Navbars = () => {
       <NavbarBrand className='flex justify-center gap-3 text-white'>
         <AcmeLogo />
         <p className="font-bold text-inherit">ACME</p>
-         <div className='text-lg'>ທຸລະກຳໂອນຜ່ານ(RTGS)</div>
+         <div className='text-lg'>ທຸລະກຳໂອນເງິນຜ່ານ(IRTGS)</div>
       </NavbarBrand>
     </Navbar>
     </>
