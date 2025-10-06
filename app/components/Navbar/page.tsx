@@ -1,6 +1,6 @@
-"use client"
-import { NavbarBrand,Navbar} from '@heroui/react'
-import React from 'react'
+"use client";
+import { NavbarBrand, Navbar, Image } from "@heroui/react";
+import React from "react";
 
 export const AcmeLogo = () => {
   return (
@@ -17,15 +17,20 @@ export const AcmeLogo = () => {
 const Navbars = () => {
   return (
     <>
-     <Navbar className='bg-[#009688]'>
-      <NavbarBrand className='flex justify-center gap-3 text-white'>
-        <AcmeLogo />
-        <p className="font-bold text-inherit">ACME</p>
-         <div className='text-lg'>ທຸລະກຳໂອນເງິນຜ່ານ(IRTGS)</div>
-      </NavbarBrand>
-    </Navbar>
+      <Navbar className="bg-[#009688]">
+        <NavbarBrand className="flex justify-center gap-3 text-white">
+          <Image
+            src="/logobank.jpg"
+            alt="logobank"
+            width={50}
+            height={50}
+            className="object-contain rounded-full"
+          />
+          <div className="text-lg">ທຸລະກຳໂອນເງິນຜ່ານ (RTGS)</div>
+        </NavbarBrand>
+      </Navbar>
     </>
-  )
-}
+  );
+};
 
-export default Navbars
+export default Navbars;
