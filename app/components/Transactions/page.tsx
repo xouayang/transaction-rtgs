@@ -11,7 +11,6 @@ import {
   displayIMMON_IUMON,
   displayIPELC_IPETP_IPEUT_IPOLC,
 } from "../../utils/action";
-import { CheckCircleIcon, ClockIcon } from "@heroicons/react/24/outline";
 import { IoMdCheckmarkCircleOutline } from "react-icons/io";
 import { HiOutlineXCircle } from "react-icons/hi";
 
@@ -71,7 +70,6 @@ export default function App() {
         setRTGS_ILPFT([]);
       }
     } catch (error) {
-      console.log(error);
       setRTGS_ILPFT([]);
     } finally {
       setIsLoading((prev) => ({ ...prev, "IRTGS-ILPFT": false }));
@@ -88,7 +86,6 @@ export default function App() {
         setIOTFT_IOWFT_Data([]);
       }
     } catch (error) {
-      console.log(error);
       setIOTFT_IOWFT_Data([]);
     } finally {
       setIsLoading((prev) => ({ ...prev, "IOTFT-IOWFT": false }));
@@ -105,7 +102,6 @@ export default function App() {
         setIEDFT_IROFT_IWTFT_ITAES_Data([]);
       }
     } catch (error) {
-      console.log(error);
       setIEDFT_IROFT_IWTFT_ITAES_Data([]);
     } finally {
       setIsLoading((prev) => ({ ...prev, "IEDFT-IROFT-IWTFT-ITAES": false }));
@@ -122,7 +118,6 @@ export default function App() {
         setIFLFX_Data([]);
       }
     } catch (error) {
-      console.log(error);
       setIFLFX_Data([]);
     } finally {
       setIsLoading((prev) => ({ ...prev, IFLFX: false }));
@@ -139,7 +134,6 @@ export default function App() {
         setILSKB_ILSKS_Data([]);
       }
     } catch (error) {
-      console.log(error);
       setILSKB_ILSKS_Data([]);
     } finally {
       setIsLoading((prev) => ({ ...prev, "ILSKB-ILSKS": false }));
@@ -156,7 +150,6 @@ export default function App() {
         setIMMON_IUMON_Data([]);
       }
     } catch (error) {
-      console.log(error);
       setIMMON_IUMON_Data([]);
     } finally {
       setIsLoading((prev) => ({ ...prev, "IMMON-IUMON": false }));
@@ -173,7 +166,6 @@ export default function App() {
         setIPELC_IPETP_IPEUT_IPOLC_Data([]);
       }
     } catch (error) {
-      console.log(error);
       setIPELC_IPETP_IPEUT_IPOLC_Data([]);
     } finally {
       setIsLoading((prev) => ({ ...prev, "IPELC-IPETP-IPEUT-IPOLC": false }));
@@ -194,23 +186,18 @@ export default function App() {
     switch (selectedTab) {
       case "IRTGS-ILPFT":
         currentData = RTGS_ILPFT;
-        console.log("rtgs", RTGS_ILPFT);
         break;
       case "IOTFT-IOWFT":
         currentData = IOTFT_IOWFT_Data;
-        console.log("iotf", IOTFT_IOWFT_Data);
         break;
       case "IEDFT-IROFT-IWTFT-ITAES":
         currentData = IEDFT_IROFT_IWTFT_ITAES_Data;
-        console.log("iedft", IEDFT_IROFT_IWTFT_ITAES_Data);
         break;
       case "IFLFX":
         currentData = IFLFX_Data;
-        console.log("iflfx", IFLFX_Data);
         break;
       case "ILSKB-ILSKS":
         currentData = ILSKB_ILSKS_Data;
-        console.log("ILSKB", ILSKB_ILSKS_Data);
         break;
       case "IMMON-IUMON":
         currentData = IMMON_IUMON_Data;
@@ -218,7 +205,6 @@ export default function App() {
         break;
       case "IPELC-IPETP-IPEUT-IPOLC":
         currentData = IPELC_IPETP_IPEUT_IPOLC_Data;
-        console.log("IPELC", IPELC_IPETP_IPEUT_IPOLC_Data);
         break;
     }
 
