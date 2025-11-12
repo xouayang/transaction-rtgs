@@ -201,7 +201,6 @@ export default function App() {
         break;
       case "IMMON-IUMON":
         currentData = IMMON_IUMON_Data;
-        console.log("IMMON", IMMON_IUMON_Data);
         break;
       case "IPELC-IPETP-IPEUT-IPOLC":
         currentData = IPELC_IPETP_IPEUT_IPOLC_Data;
