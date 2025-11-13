@@ -57,7 +57,6 @@ export default function App() {
   });
 
   const tableBodyRef = useRef<HTMLDivElement>(null);
-  const scrollCompleteRef = useRef(false);
 
   // Data fetching functions for each transaction type
   const fetchRTGS_ILPFT = async () => {
@@ -177,7 +176,7 @@ export default function App() {
     fetchRTGS_ILPFT();
   }, []);
 
-  // Auto-scroll effect with completion detection
+  // Auto-scroll effect
   useEffect(() => {
     const container = tableBodyRef.current;
     let currentData = null;
@@ -213,7 +212,6 @@ export default function App() {
     let scrollPosition = 0;
     const scrollSpeed = 0.4;
     let isPaused = false;
-    scrollCompleteRef.current = false;
 
     const scrollTable = () => {
       if (!container) return;
@@ -226,11 +224,8 @@ export default function App() {
           scrollPosition >= container.scrollHeight - container.clientHeight - 5;
 
         if (isAtBottom) {
-          // Mark scrolling as complete for this tab
-          scrollCompleteRef.current = true;
-          scrollPosition = container.scrollHeight - container.clientHeight;
-        } else {
-          scrollCompleteRef.current = false;
+          // Reset to top when reaching bottom
+          scrollPosition = 0;
         }
 
         container.scrollTop = scrollPosition;
@@ -248,7 +243,6 @@ export default function App() {
     // Reset scroll position when tab changes
     container.scrollTop = 0;
     scrollPosition = 0;
-    scrollCompleteRef.current = false;
 
     animationFrameId = requestAnimationFrame(scrollTable);
 
@@ -268,7 +262,7 @@ export default function App() {
     IPELC_IPETP_IPEUT_IPOLC_Data,
   ]);
 
-  // Smart tab switching that waits for scroll completion
+  // Tab switching every 30 seconds
   useEffect(() => {
     if (intervalRef.current) {
       clearInterval(intervalRef.current);
@@ -276,52 +270,16 @@ export default function App() {
 
     intervalRef.current = setInterval(() => {
       setSelectedTab((current) => {
-        let currentData = null;
+        const currentIndex = tabs.findIndex((tab) => tab === current);
+        const nextIndex = (currentIndex + 1) % tabs.length;
+        const nextTab = tabs[nextIndex];
 
-        // Get current tab data
-        switch (current) {
-          case "IRTGS-ILPFT":
-            currentData = RTGS_ILPFT;
-            break;
-          case "IOTFT-IOWFT":
-            currentData = IOTFT_IOWFT_Data;
-            break;
-          case "IEDFT-IROFT-IWTFT-ITAES":
-            currentData = IEDFT_IROFT_IWTFT_ITAES_Data;
-            break;
-          case "IFLFX":
-            currentData = IFLFX_Data;
-            break;
-          case "ILSKB-ILSKS":
-            currentData = ILSKB_ILSKS_Data;
-            break;
-          case "IMMON-IUMON":
-            currentData = IMMON_IUMON_Data;
-            break;
-          case "IPELC-IPETP-IPEUT-IPOLC":
-            currentData = IPELC_IPETP_IPEUT_IPOLC_Data;
-            break;
-        }
+        // Fetch data for the next tab if it hasn't been loaded yet
+        fetchTabData(nextTab);
 
-        // Only switch to next tab if scrolling is complete OR if there's no data
-        const shouldSwitch =
-          scrollCompleteRef.current || !currentData || currentData.length === 0;
-
-        if (shouldSwitch) {
-          const currentIndex = tabs.findIndex((tab) => tab === current);
-          const nextIndex = (currentIndex + 1) % tabs.length;
-          const nextTab = tabs[nextIndex];
-
-          // Fetch data for the next tab if it hasn't been loaded yet
-          fetchTabData(nextTab);
-
-          return nextTab;
-        }
-
-        // If scrolling isn't complete, stay on current tab
-        return current;
+        return nextTab;
       });
-    }, 10000);
+    }, 30000); // 30 seconds
 
     return () => {
       if (intervalRef.current) {
@@ -365,11 +323,11 @@ export default function App() {
         break;
     }
   };
+
   const handleSelectionChange = (key: React.Key) => {
     const tabKey = key as string;
     setSelectedTab(tabKey);
     fetchTabData(tabKey);
-    scrollCompleteRef.current = false;
   };
 
   const getStatusInfo = (status_code: string) => {
