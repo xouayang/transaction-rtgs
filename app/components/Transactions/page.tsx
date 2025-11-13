@@ -1,5 +1,5 @@
 "use client";
-import { Tabs, Tab, Card, CardBody, Chip } from "@heroui/react";
+import { Tabs, Tab, Card, CardBody, Chip, Tooltip } from "@heroui/react";
 import { useState, useEffect, useRef } from "react";
 import { transactionsType } from "../../types/type";
 import {
@@ -492,7 +492,7 @@ export default function App() {
                       }}
                     >
                       {/* ສຳດັບ Column (Index + 1) - Smaller width */}
-                      <div className="py-4 px-6 text-gray-700 text-base border-r border-gray-100 font-medium flex items-center justify-center min-h-[60px]">
+                      <div className="py-4 px-6 text-gray-700 text-base border-r border-gray-100 font-medium flex items-center min-h-[60px]">
                         <span className="leading-relaxed">
                           <p className="font-semibold text-gray-800 text-sm">
                             {index + 1}
@@ -560,18 +560,40 @@ export default function App() {
 
                       {/* ສະຖານະ Column (STATUS) */}
                       <div className="py-4 px-6 text-base flex items-center min-h-[60px]">
-                        <Chip
-                          color={getStatusInfo(transaction.status_code).color}
-                          variant="flat"
-                          className="px-2 sm:px-4 py-1.5 sm:py-2 font-semibold w-full justify-center text-xs sm:text-sm"
-                          startContent={
-                            getStatusInfo(transaction.status_code).icon
-                          }
-                        >
-                          <span className="ml-1">
-                            {getStatusInfo(transaction.status_code).label}
-                          </span>
-                        </Chip>
+                        {transaction.status_code === "0000" ? (
+                          <Chip
+                            color={getStatusInfo(transaction.status_code).color}
+                            variant="flat"
+                            className="px-2 sm:px-4 py-1.5 sm:py-2 font-semibold w-full justify-center text-xs sm:text-sm"
+                            startContent={
+                              getStatusInfo(transaction.status_code).icon
+                            }
+                          >
+                            <span className="ml-1">
+                              {getStatusInfo(transaction.status_code).label}
+                            </span>
+                          </Chip>
+                        ) : (
+                          <Tooltip
+                            content={transaction.status_desc || "ບໍ່ສຳເລັດ"}
+                            color="danger"
+                          >
+                            <Chip
+                              color={
+                                getStatusInfo(transaction.status_code).color
+                              }
+                              variant="flat"
+                              className="px-2 sm:px-4 py-1.5 sm:py-2 font-semibold w-full justify-center text-xs sm:text-sm"
+                              startContent={
+                                getStatusInfo(transaction.status_code).icon
+                              }
+                            >
+                              <span className="ml-1">
+                                {getStatusInfo(transaction.status_code).label}
+                              </span>
+                            </Chip>
+                          </Tooltip>
+                        )}
                       </div>
                     </div>
                   ))}
@@ -653,7 +675,7 @@ export default function App() {
           />
         </Tab>
 
-        <Tab key="IEDFT-IROFT-IWTFT-ITAES" title="ຊຳລະໃບບິນ">
+        <Tab key="IEDFT-IROFT-IWTFT-ITAES" title="ຊຳລະຄ່າໄຟຟ້າ-ນໍ້າ-ພາສີທີ່ດີນ">
           <TransactionTable
             data={currentTabData.data}
             isLoading={currentTabData.loading}
